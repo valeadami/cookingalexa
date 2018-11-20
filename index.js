@@ -13,7 +13,7 @@ app.use("/alexa", alexaRouter);
 alexaRouter.use(bodyParser.json());
 
 app.use("/ping", function (req, res, next) {
-    res.send('Welcome to Cooking Service');
+    res.send('Welcome to Panloquacity test');
 });
 /* configurazione della chiamata  */
 postData = querystring.stringify({
@@ -45,8 +45,8 @@ server.listen(port, function () {
     console.log("Server is up and running on port 3000...");
 });
 
-alexaRouter.post('/cookingApi', function (req, res) {
-    console.log('sono in cookingApi ');
+alexaRouter.post('/callAVA', function (req, res) {
+    console.log('sono in callAVA ');
     
     if (req.body.request.type === 'LaunchRequest') {
         res.json({
@@ -55,13 +55,13 @@ alexaRouter.post('/cookingApi', function (req, res) {
               "shouldEndSession": false,
               "outputSpeech": {
                 "type": "PlainText",
-                "text": "Welcome to Henry's Cooking App"
+                "text": "Benvenuto in Panloquacity"
               }
             }
           });    
     }
     else if (req.body.request.type === 'IntentRequest' &&
-             req.body.request.intent.name === 'GetCookingIntent') {     
+             req.body.request.intent.name === 'provaSlot') {     
        // BuildGetCookingInstruction(req, res); 
             callAva(req, res);
 
@@ -75,7 +75,7 @@ alexaRouter.post('/cookingApi', function (req, res) {
               "shouldEndSession": false,
               "outputSpeech": {
                 "type": "PlainText",
-                "text": "Puoi chiedermi come  preparare o cucinare un cibo"
+                "text": "Puoi chiedermi quello che vuoi"
               }
             }
           });  
@@ -87,7 +87,7 @@ alexaRouter.post('/cookingApi', function (req, res) {
               "shouldEndSession": true,
               "outputSpeech": {
                 "type": "PlainText",
-                "text": "Ok, chiudo la sessione. Quando vuoi, dì Alexa apri cooking"
+                "text": "Ok, chiudo la sessione. Quando vuoi, dì Alexa apri provaslot"
               }
             }
           });  
