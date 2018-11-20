@@ -5,7 +5,7 @@ var querystring = require('querystring');
 var path = require("path");
 //var verifier = require('alexa-verifier-middleware');
 var unirest = require('unirest');
-var bot='';
+var bot='FarmaInfoBot';
 var app = express();
 var alexaRouter = express.Router();
 app.use("/alexa", alexaRouter);
@@ -171,8 +171,8 @@ function callAva(req, res){
     let strRicerca='';
     let out='';
     let sessionId = req.body.session.sessionId;
-    bot=req.query.ava;
-    console.log('sessionID di Alexa= ' + sessionId + ' e stai interrogando il bot ' + bot);
+    //bot=req.query.ava;
+    console.log('sessionID di Alexa= ' + sessionId );
     //prendo il parametro....slot
     var str=request.intent.slots.food.value;
         if(str) {
