@@ -170,7 +170,7 @@ function callAva(req, res){
     let request = req.body.request;
     let strRicerca='';
     let out='';
-    let sessionId = req.body.sessionId;
+    let sessionId = request.body.session.sessionId;
     bot=req.query.ava;
     console.log('sessionID di Alexa= ' + sessionId + ' e stai interrogando il bot ' + bot);
     //prendo il parametro....slot
