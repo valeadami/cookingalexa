@@ -63,9 +63,9 @@ alexaRouter.post('/cookingApi', function (req, res) {
     else if (req.body.request.type === 'IntentRequest' &&
              req.body.request.intent.name === 'GetCookingIntent') {     
        // BuildGetCookingInstruction(req, res); 
-            callAva(req, res);
+           // callAva(req, res);
 
-         /*  
+         
        res.json({
         "version": "1.0",
         "response": {
@@ -74,8 +74,8 @@ alexaRouter.post('/cookingApi', function (req, res) {
             "type": "PlainText",
             "text": "Sono nel intent di Cooking e vuoi cucinare " + foodName
           }
-        }x
-      });  */
+        }
+      });  
     } else if (req.body.request.type === 'IntentRequest'  && req.body.request.intent.name === 'AMAZON.HelpIntent') { 
         console.log('Hai chiesto aiuto');
         res.json({
