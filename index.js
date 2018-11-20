@@ -210,18 +210,7 @@ function callAva(req, res){
                     strOutput=c.output[0].output; 
                    
                     strOutput=strOutput.replace(/(<\/p>|<p>|<b>|<\/b>|<br>|<\/br>|<strong>|<\/strong>|<div>|<\/div>|<ul>|<li>|<\/ul>|<\/li>|&nbsp;|)/gi, '');
-                    res.send(JSON.stringify({
-                        "version": "1.0",
-
-                        "response": {
-                            "shouldEndSession": false,
-                            "outputSpeech": {
-                            "type": "PlainText",
-                            "text": strOutput
-                            }
-                        }
-                        }));
-                    }); 
+                    
                   
                   
             });
@@ -244,4 +233,14 @@ function callAva(req, res){
           
         req1.write(postData);
         req1.end();
+        res.json({
+            "version": "1.0",
+            "response": {
+                "shouldEndSession": false,
+                "outputSpeech": {
+                "type": "PlainText",
+                "text": strOutput
+                }
+            }
+        }); 
 };
