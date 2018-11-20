@@ -182,7 +182,7 @@ function callAva(req, res){
         }
         
         
-        const req = https.request(options, (res) => {
+        var req1 = https.request(options, (res) => {
              
             console.log('________valore di options.cookie INIZIO ' + options.headers.Cookie);
             console.log(`STATUS DELLA RISPOSTA: ${res.statusCode}`);
@@ -232,10 +232,12 @@ function callAva(req, res){
             });
           });
           
-          req.on('error', (e) => {
+          req1.on('error', (e) => {
             console.error(`problem with request: ${e.message}`);
             strOutput="si è verificato errore " + e.message;
            
           });  
-
+          
+        req1.write(postData);
+        req1.end();
 };
