@@ -169,8 +169,9 @@ function BuildGetCookingInstruction(req, res) {
 function callAva(req, res){
     let request = req.body.request;
     let strRicerca='';
-    let out='';
-    let sessionId = req.body.session.sessionId;
+    let out='';   
+   let data = '';
+   let strOutput='';
     //bot=req.query.ava;
     console.log('sessionID di Alexa= ' + sessionId );
     //prendo il parametro....slot
