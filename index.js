@@ -21,7 +21,18 @@ server.listen(port, function () {
 });
 
 alexaRouter.post('/cookingApi', function (req, res) {
-    if (req.body.request.type === 'LaunchRequest') {
+    console.log('sono in cookingApi ' + JSON.stringify(req.body));
+    res.json({
+        "version": "1.0",
+        "response": {
+          "shouldEndSession": true,
+          "outputSpeech": {
+            "type": "PlainText",
+            "text": "Welcome to Henry's Cooking App"
+          }
+        }
+      });    
+    /*if (req.body.request.type === 'LaunchRequest') {
         res.json({
             "version": "1.0",
             "response": {
@@ -39,7 +50,7 @@ alexaRouter.post('/cookingApi', function (req, res) {
     }
     else if (req.body.request.type === 'SessionEndedRequest') { 
         console.log('Session ended', req.body.request.reason);
-    }
+    }*/
 });
 /*
 function BuildGetCookingInstruction(req, res) {
