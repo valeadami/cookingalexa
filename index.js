@@ -21,7 +21,7 @@ server.listen(port, function () {
 });
 
 alexaRouter.post('/cookingApi', function (req, res) {
-    //console.log('sono in cookingApi ' + JSON.stringify(req.body));
+    console.log('sono in cookingApi ');
     /*res.json({
         "version": "1.0",
         "response": {
@@ -36,7 +36,7 @@ alexaRouter.post('/cookingApi', function (req, res) {
         res.json({
             "version": "1.0",
             "response": {
-              "shouldEndSession": true,
+              "shouldEndSession": false,
               "outputSpeech": {
                 "type": "PlainText",
                 "text": "Welcome to Henry's Cooking App"
@@ -50,7 +50,7 @@ alexaRouter.post('/cookingApi', function (req, res) {
        res.json({
         "version": "1.0",
         "response": {
-          "shouldEndSession": true,
+          "shouldEndSession": false,
           "outputSpeech": {
             "type": "PlainText",
             "text": "Sono nel intent di Cooking"
