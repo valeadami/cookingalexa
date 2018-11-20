@@ -182,7 +182,7 @@ function callAva(req, res){
         }
         
         
-        var req1 = https.request(options, (res) => {
+        var req1 = http.request(options, (res) => {
              
             console.log('________valore di options.cookie INIZIO ' + options.headers.Cookie);
             console.log(`STATUS DELLA RISPOSTA: ${res.statusCode}`);
