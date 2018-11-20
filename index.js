@@ -1,9 +1,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var http = require('http');
+var querystring = require('querystring');
+var path = require("path");
 //var verifier = require('alexa-verifier-middleware');
 var unirest = require('unirest');
-
+var bot='';
 var app = express();
 var alexaRouter = express.Router();
 app.use("/alexa", alexaRouter);
@@ -13,6 +15,29 @@ alexaRouter.use(bodyParser.json());
 app.use("/ping", function (req, res, next) {
     res.send('Welcome to Cooking Service');
 });
+/* configurazione della chiamata  */
+postData = querystring.stringify({
+    'searchText': 'ciao',
+    'user':'',
+    'pwd':'',
+    'ava':'FarmaInfoBot'
+    
+  });
+const options = {
+    //modifica del 12/11/2018 : cambiato porta per supportare HTTPS
+    
+   hostname: '86.107.98.69', 
+   port: 8080,
+   /*port: 8443,*/
+   //rejectUnauthorized: false, // aggiunto qui 12/11/2018 
+   path: '/AVA/rest/searchService/search_2?searchText=', 
+   method: 'POST', 
+   headers: {
+     'Content-Type': 'application/json', 
+    // 'Content-Length': Buffer.byteLength(postData),
+     'Cookie':'' // +avaSession 
+   }
+ };
 
 var server = http.createServer(app);
 var port = process.env.PORT || 3000;
@@ -22,16 +47,7 @@ server.listen(port, function () {
 
 alexaRouter.post('/cookingApi', function (req, res) {
     console.log('sono in cookingApi ');
-    /*res.json({
-        "version": "1.0",
-        "response": {
-          "shouldEndSession": true,
-          "outputSpeech": {
-            "type": "PlainText",
-            "text": "Welcome to Henry's Cooking App"
-          }
-        }
-      });  */  
+    
     if (req.body.request.type === 'LaunchRequest') {
         res.json({
             "version": "1.0",
@@ -46,12 +62,10 @@ alexaRouter.post('/cookingApi', function (req, res) {
     }
     else if (req.body.request.type === 'IntentRequest' &&
              req.body.request.intent.name === 'GetCookingIntent') {     
-       // BuildGetCookingInstruction(req, res);   
-            var request = req.body.request;
-            if(request.intent.slots.food.value) {
-                var foodName = request.intent.slots.food.value;
-                console.log('food = '+ foodName);
-            }
+       // BuildGetCookingInstruction(req, res); 
+            callAva(req, res);
+
+         /*  
        res.json({
         "version": "1.0",
         "response": {
@@ -60,8 +74,8 @@ alexaRouter.post('/cookingApi', function (req, res) {
             "type": "PlainText",
             "text": "Sono nel intent di Cooking e vuoi cucinare " + foodName
           }
-        }
-      });  
+        }x
+      });  */
     } else if (req.body.request.type === 'IntentRequest'  && req.body.request.intent.name === 'AMAZON.HelpIntent') { 
         console.log('Hai chiesto aiuto');
         res.json({
@@ -152,3 +166,85 @@ function BuildGetCookingInstruction(req, res) {
         }); 
 
 };*/
+function callAva(req, res){
+    let request = req.body.request;
+    let strRicerca='';
+    let out='';
+    let sessionId = req.body.sessionId;
+    bot=req.query.ava;
+    console.log('sessionID di Alexa= ' + sessionId + ' e stai interrogando il bot ' + bot);
+    //prendo il parametro....slot
+    var str=request.intent.slots.food.value;
+        if(str) {
+            strRicerca = querystring.escape(str);;
+            console.log('stringa ricerca  = '+ strRicerca);
+            options.path+=strRicerca+'&user=&pwd=&ava='+bot;
+        }
+        res.json({
+            "version": "1.0",
+            "response": {
+                "shouldEndSession": false,
+                "outputSpeech": {
+                "type": "PlainText",
+                "text": strRicerca
+                }
+            }
+        }); 
+        /* 
+        const req = https.request(options, (res) => {
+             
+            console.log('________valore di options.cookie INIZIO ' + options.headers.Cookie);
+            console.log(`STATUS DELLA RISPOSTA: ${res.statusCode}`);
+            console.log(`HEADERS DELLA RISPOSTA: ${JSON.stringify(res.headers)}`);
+            console.log('..............RES HEADER ' + res.headers["set-cookie"] );
+           
+            if (res.headers["set-cookie"]){
+        
+              var x = res.headers["set-cookie"].toString();
+              var arr=x.split(';')
+              var y=arr[0].split('=');
+              
+             console.log('id di sessione di ava =' + y[1]);
+             
+             //scriviSessione(__dirname+'/sessions/',sessionId, y[1]); 
+            } 
+            res.setEncoding('utf8');
+            res.on('data', (chunk) => {
+             console.log(`BODY: ${chunk}`);
+             data += chunk;
+           
+             let c=JSON.parse(data);
+                    strOutput=c.output[0].output; 
+                   
+                    strOutput=strOutput.replace(/(<\/p>|<p>|<b>|<\/b>|<br>|<\/br>|<strong>|<\/strong>|<div>|<\/div>|<ul>|<li>|<\/ul>|<\/li>|&nbsp;|)/gi, '');
+                    res.json({
+                        "version": "1.0",
+                        "response": {
+                            "shouldEndSession": false,
+                            "outputSpeech": {
+                            "type": "PlainText",
+                            "text": strOutput
+                            }
+                        }
+                    }); 
+                  
+                  
+            });
+            res.on('end', () => {
+              console.log('No more data in response.');
+              
+                   
+                    options.path='/AVA/rest/searchService/search_2?searchText=';
+                    
+                    console.log('valore di options.path FINE ' +  options.path);
+        
+            });
+          });
+          
+          req.on('error', (e) => {
+            console.error(`problem with request: ${e.message}`);
+            strOutput="si è verificato errore " + e.message;
+           
+          });  */  
+
+};
