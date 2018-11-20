@@ -4,11 +4,13 @@ var http = require('http');
 var querystring = require('querystring');
 var path = require("path");
 //var verifier = require('alexa-verifier-middleware');
+var fs = require("fs");
 var unirest = require('unirest');
 var bot='FarmaInfoBot';
 var app = express();
 var alexaRouter = express.Router();
 app.use("/alexa", alexaRouter);
+app.use(express.static(__dirname));
 //alexaRouter.use(verifier);
 alexaRouter.use(bodyParser.json());
 
@@ -235,3 +237,37 @@ function callAva(req, resp){
         req1.end();
         
 };
+/**** FUNZIONI A SUPPORTO */
+
+function scriviSessione(path, strSessione, strValore) {
+  
+    fs.appendFile(path + strSessione,strValore, function (err) {
+      if (err) {
+        
+        throw err;
+      
+      } else {
+      console.log('DENTRO SCRIVI SESSIONE: SALVATO FILE '+ path + strSessione);
+      
+      }
+       
+    });
+   
+  } 
+  
+  function leggiSessione(path, strSessione){
+    var contents='';
+    try {
+      fs.accessSync(__dirname+ '/sessions/'+ strSessione);
+      contents = fs.readFileSync(__dirname+'/sessions/'+ strSessione, 'utf8');
+      console.log('DENTRO LEGGI SESSIIONE ' +contents);
+    
+  
+    }catch (err) {
+      if (err.code==='ENOENT')
+      console.log('DENTRO LEGGI SESSIONE :il file non esiste...')
+     
+    }
+    return contents;
+  
+  } 
