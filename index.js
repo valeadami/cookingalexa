@@ -57,11 +57,7 @@ alexaRouter.post('/cookingApi', function (req, res) {
           }
         }
       });  
-    } 
-    else if (req.body.request.type === 'SessionEndedRequest') { 
-        console.log('Session ended', req.body.request.reason);
-    } else if (req.body.request.type === 'IntentRequest'  &&
-    req.body.request.intent.name === 'HelpIntent') { 
+    } else if (req.body.request.type === 'IntentRequest'  && req.body.request.intent.name === 'AMAZON.HelpIntent') { 
         console.log('Hai chiesto aiuto');
         res.json({
             "version": "1.0",
@@ -73,8 +69,7 @@ alexaRouter.post('/cookingApi', function (req, res) {
               }
             }
           });  
-    } else if (req.body.request.type === 'IntentRequest'  &&
-    req.body.request.intent.name === 'CancelIntent') { 
+    } else if (req.body.request.type === 'IntentRequest'  && req.body.request.intent.name === 'AMAZON.StopIntent') { 
         console.log('Vuoi uscire');
         res.json({
             "version": "1.0",
@@ -86,7 +81,31 @@ alexaRouter.post('/cookingApi', function (req, res) {
               }
             }
           });  
-    }
+    } else if (req.body.request.type === 'IntentRequest'  && req.body.request.intent.name === 'AMAZON.CancelIntent') { 
+        console.log('Vuoi annullare');
+        res.json({
+            "version": "1.0",
+            "response": {
+              "shouldEndSession": false,
+              "outputSpeech": {
+                "type": "PlainText",
+                "text": "Ok, annullo"
+              }
+            }
+          });  
+    } else if (req.body.request.type === 'SessionEndedRequest') { 
+        console.log('Session ended', req.body.request.reason);
+        res.json({
+            "version": "1.0",
+            "response": {
+              "shouldEndSession": true,
+              "outputSpeech": {
+                "type": "PlainText",
+                "text": "Arrivederci"
+              }
+            }
+          }); 
+    } 
     
 });
 //AMAZON.CancelIntent
