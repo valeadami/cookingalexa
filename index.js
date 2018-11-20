@@ -180,17 +180,8 @@ function callAva(req, res){
             console.log('stringa ricerca  = '+ strRicerca);
             options.path+=strRicerca+'&user=&pwd=&ava='+bot;
         }
-        res.json({
-            "version": "1.0",
-            "response": {
-                "shouldEndSession": false,
-                "outputSpeech": {
-                "type": "PlainText",
-                "text": strRicerca
-                }
-            }
-        }); 
-        /* 
+        
+        
         const req = https.request(options, (res) => {
              
             console.log('________valore di options.cookie INIZIO ' + options.headers.Cookie);
@@ -245,6 +236,6 @@ function callAva(req, res){
             console.error(`problem with request: ${e.message}`);
             strOutput="si è verificato errore " + e.message;
            
-          });  */  
+          });  
 
 };
