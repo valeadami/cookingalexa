@@ -175,7 +175,14 @@ function callAva(req, resp){
             console.log('stringa ricerca  = '+ strRicerca);
             options.path+=strRicerca+'&user=&pwd=&ava='+bot;
         }
-        
+        var ss=leggiSessione(__dirname +'/sessions/', sessionId);
+        if (ss===''){
+            options.headers.Cookie='JSESSIONID=';
+            console.log('DENTRO CALL AVA: SESSIONE VUOTA');
+        }else {
+             options.headers.Cookie='JSESSIONID='+ss;
+             console.log('DENTRO CALL AVA:  HO LA SESSIONE + JSESSIONID');
+        }
         
         var req1 = http.request(options, (res) => {
              
@@ -192,7 +199,7 @@ function callAva(req, resp){
               
              console.log('id di sessione di ava =' + y[1]);
              
-             //scriviSessione(__dirname+'/sessions/',sessionId, y[1]); 
+             scriviSessione(__dirname+'/sessions/',sessionId, y[1]); 
             } 
             res.setEncoding('utf8');
             res.on('data', (chunk) => {
