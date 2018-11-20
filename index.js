@@ -29,7 +29,7 @@ const options = {
    hostname: '86.107.98.69', 
   // port: 8080,
    port: 8443,
-   rejectUnauthorized: false, // aggiunto qui 12/11/2018 
+   //rejectUnauthorized: false, // aggiunto qui 12/11/2018 
    path: '/AVA/rest/searchService/search_2?searchText=', 
    method: 'POST', 
    headers: {
