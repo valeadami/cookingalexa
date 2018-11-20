@@ -47,13 +47,18 @@ alexaRouter.post('/cookingApi', function (req, res) {
     else if (req.body.request.type === 'IntentRequest' &&
              req.body.request.intent.name === 'GetCookingIntent') {     
        // BuildGetCookingInstruction(req, res);   
+            var request = req.body.request;
+            if(request.intent.slots.food.value) {
+                var foodName = request.intent.slots.food.value;
+                console.log('food = '+ foodName);
+            }
        res.json({
         "version": "1.0",
         "response": {
           "shouldEndSession": false,
           "outputSpeech": {
             "type": "PlainText",
-            "text": "Sono nel intent di Cooking"
+            "text": "Sono nel intent di Cooking e vuoi cucinare " + foodName
           }
         }
       });  
