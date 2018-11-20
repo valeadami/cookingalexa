@@ -167,7 +167,7 @@ function callAva(req, resp){
     //bot=req.query.ava;
     console.log('sessionID di Alexa= ' + sessionId);
     //prendo il parametro....slot
-    var str=request.intent.slots.food.value;
+    var str=request.intent.slots.searchText.value;
         if(str) {
             strRicerca = querystring.escape(str);;
             console.log('stringa ricerca  = '+ strRicerca);
