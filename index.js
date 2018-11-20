@@ -72,7 +72,7 @@ alexaRouter.post('/cookingApi', function (req, res) {
           "shouldEndSession": false,
           "outputSpeech": {
             "type": "PlainText",
-            "text": "Sono nel intent di Cooking e vuoi cucinare " + foodName
+            "text": "Sono nel intent di Cooking"
           }
         }
       });  
