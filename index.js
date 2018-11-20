@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var http = require('http');
+var http = require('https');
 var querystring = require('querystring');
 var path = require("path");
 //var verifier = require('alexa-verifier-middleware');
