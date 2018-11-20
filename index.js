@@ -17,12 +17,12 @@ app.use("/ping", function (req, res, next) {
 var server = http.createServer(app);
 var port = process.env.PORT || 3000;
 server.listen(port, function () {
-    console.log("Server is up and running om port 3000...");
+    console.log("Server is up and running on port 3000...");
 });
 
 alexaRouter.post('/cookingApi', function (req, res) {
-    console.log('sono in cookingApi ' + JSON.stringify(req.body));
-    res.json({
+    //console.log('sono in cookingApi ' + JSON.stringify(req.body));
+    /*res.json({
         "version": "1.0",
         "response": {
           "shouldEndSession": true,
@@ -31,8 +31,8 @@ alexaRouter.post('/cookingApi', function (req, res) {
             "text": "Welcome to Henry's Cooking App"
           }
         }
-      });    
-    /*if (req.body.request.type === 'LaunchRequest') {
+      });  */  
+    if (req.body.request.type === 'LaunchRequest') {
         res.json({
             "version": "1.0",
             "response": {
@@ -46,11 +46,21 @@ alexaRouter.post('/cookingApi', function (req, res) {
     }
     else if (req.body.request.type === 'IntentRequest' &&
              req.body.request.intent.name === 'GetCookingIntent') {     
-        BuildGetCookingInstruction(req, res);   
+       // BuildGetCookingInstruction(req, res);   
+       res.json({
+        "version": "1.0",
+        "response": {
+          "shouldEndSession": true,
+          "outputSpeech": {
+            "type": "PlainText",
+            "text": "Sono nel intent di Cooking"
+          }
+        }
+      });  
     }
     else if (req.body.request.type === 'SessionEndedRequest') { 
         console.log('Session ended', req.body.request.reason);
-    }*/
+    }
 });
 /*
 function BuildGetCookingInstruction(req, res) {
