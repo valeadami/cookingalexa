@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var https = require('https');
+var http = require('http');
 var querystring = require('querystring');
 var path = require("path");
 //var verifier = require('alexa-verifier-middleware');
@@ -41,7 +41,7 @@ const options = {
    }
  };
 
-var server = https.createServer(app);
+var server = http.createServer(app);
 var port = process.env.PORT || 3000;
 server.listen(port, function () {
     console.log("Server is up and running on port 3000...");
@@ -184,7 +184,7 @@ function callAva(req, resp){
              console.log('DENTRO CALL AVA:  HO LA SESSIONE + JSESSIONID');
         }
         
-        var req1 = https.request(options, (res) => {
+        var req1 = http.request(options, (res) => {
              
             console.log('________valore di options.cookie INIZIO ' + options.headers.Cookie);
             console.log(`STATUS DELLA RISPOSTA: ${res.statusCode}`);
