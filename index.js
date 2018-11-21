@@ -6,7 +6,7 @@ var path = require("path");
 //var verifier = require('alexa-verifier-middleware');
 var fs = require("fs");
 var unirest = require('unirest');
-var bot='FarmaInfoBot';
+var bot='';
 var app = express();
 var alexaRouter = express.Router();
 //app.use("/alexa", alexaRouter);
@@ -50,7 +50,7 @@ server.listen(port, function () {
 
 alexaRouter.post('/callAVA', function (req, res) {
     console.log('sono in callAVA ');
-    
+    bot=req.query.ava;
     if (req.body.request.type === 'LaunchRequest') {
         res.json({
             "version": "1.0",
@@ -173,8 +173,9 @@ function callAva(req, resp){
     var str=request.intent.slots.searchText.value;
         if(str) {
             strRicerca = querystring.escape(str);;
-            console.log('stringa ricerca  = '+ strRicerca);
+           
             options.path+=strRicerca+'&user=&pwd=&ava='+bot;
+            console.log('stringa ricerca  = '+ strRicerca + " bot interrogato "+bot);
         }
         var ss=leggiSessione(__dirname +'/sessions/', sessionId);
         if (ss===''){
